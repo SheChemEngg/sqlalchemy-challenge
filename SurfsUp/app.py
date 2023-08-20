@@ -176,7 +176,10 @@ def temperature_stats(start_date, end_date="2017-08-23"):
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     end_date = datetime.strptime(end_date, "%Y-%m-%d")
 
-    if start_date < datetime(2010, 1, 1) or end_date > datetime(2017, 8, 23):
+    if start_date > end_date or start_date < datetime(2010, 1, 1) or end_date > datetime(2017, 8, 23):
+        return jsonify({"error": f"Choose dates from 2010-01-01 to 2017-08-23."}), 404
+    
+    elif start_date > end_date or start_date > datetime(2017, 8, 23) or end_date < datetime(2010, 1, 1):
         return jsonify({"error": f"Choose dates from 2010-01-01 to 2017-08-23."}), 404
         
     else:
